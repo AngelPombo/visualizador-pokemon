@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&family=Tinos:wght@400;700&display=swap');
 *{
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family:'Raleway', sans-serif;
 }
 
 html{
@@ -20,9 +24,28 @@ body{
   /* 90dg >> para pc */
 }
 
+a{
+  color: inherit;
+  text-decoration: none;
+}
+
 h1{
   grid-area: head;
   text-align: center;
+}
+
+h2{
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+h3{
+  font-size: 1.4rem;
+  font-style: oblique;
+  color: whitesmoke;
+  margin-bottom: 10px;
+  margin-right: auto;
 }
 
 nav{
@@ -47,37 +70,182 @@ main{
   margin: auto;
 }
 
-.pokemonCard {
+.pokemon-card {
   display: inline-block;
   grid-area: main;
   margin: 10px;
-  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 5%;
   box-shadow: 0 25px 25px rgba(0, 0, 0, 0.4);
   width: 200px;
-  background-color: rgb(207, 207, 207);
+  background-image: url("/img/pokeUltima.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: 120% 30%;
+  max-width: 300px;
+  max-height: 900px;
+  min-width: 300px;
+  min-height: 300px;
 }
 
-.pokemonName {
-  font-weight: bold;
-  margin-bottom: 5px;
+.decoracion-fondo{
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: 120% 95%;
 }
 
-.pokemonImg {
+.header-card {
   display: flex;
-  width: 100%;
-  height: 100%;
-  margin: auto;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.header-card > h2{
+  margin: 0;
+}
+.header-card > h3{
+  margin: 0;
+  color: white;
+}
+
+.section-card{
+  max-height: 310px;
+  min-height: 310px;
+  background-color: whitesmoke;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.div-about{
+  display: flex;
+  flex-direction: column;
+  margin-top: 3px;
+  align-items: center;
+}
+
+.pokemon-altura{
+  margin-top: 25px;
+}
+
+.pokemon-peso{
+  margin-top: 20px;
+}
+
+.pokemon-exp-base{
+  margin-top: 20px;
+}
+
+.pokemon-habilidades{
+  margin-top: 20px;
+}
+
+.div-tipos{
+  display: flex;
+  gap: 1rem;
 }
 
 .pokemon-tipo{
-  display: inline-flex;
-  flex-direction: row;
-  max-width: 50px;
-  margin: 0.5rem;
+  min-width: 60px;
+  flex-direction: column;
+  max-width: 20%;
+  margin-top: 40px;
 }
 
-/* .poke-not-found{
-  visibility: hidden;
+.div-stats{
+  display: none;
+  margin-top: 3px;
+}
+
+.pokemon-hp{
+  margin-top: 25px;
+}
+
+.pokemon-ataque{
+  margin-top: 20px;
+}
+
+.pokemon-ataque-especial{
+  margin-top: 20px;
+}
+
+.pokemon-defensa{
+  margin-top: 20px;
+}
+
+.pokemon-defensa-especial{
+  margin-top: 20px;
+}
+
+.pokemon-velocidad{
+  margin-top: 20px;
+}
+
+.menu-card{
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background-color: whitesmoke;
+  border-radius: 0;
+}
+
+.menu-card > ul{
+  gap: 4rem;
+  margin: 0.4rem;
+  padding: 0;
+  display: inline-flex;
+  list-style: none;
+  color: black;
+}
+
+
+.section-card > p{
+  margin: 0;
+  padding: 3%;
+}
+.pokemon-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+.pokemon-img {
+  max-width: 9rem;
+  max-height: 9rem;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  align-items: top;
+}
+
+.div-about.active{
+  display: none;
+  flex-direction: column;
+}
+
+.div-stats.active{
+  display: flex;
+  flex-direction: column;
+}
+
+/* .on-off{
+  border-bottom-style: ridge;
+  border-bottom-color: black;
 } */
+
+button{
+  font-weight: bold;
+  font-size: 1rem;
+  border-color: #ccc;
+  border-style: inherit;
+  background-color: rgb(247, 247, 247);
+}
+
+.div-id{
+  display: flex;
+  margin-left: 10px;
+}
