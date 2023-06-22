@@ -1,3 +1,4 @@
+import {errorConexion} from "./sweetAlert.js";
 "use-strict";
 
 
@@ -6,7 +7,7 @@ const apiUrl = "https://pokeapi.co/api/v2/pokemon?limit=1126";
 let pokemonList = [];
 const pokemonInput = document.getElementById("pokemonInput");
 const pokemonListContainer = document.getElementById("pokemonList");
-const pokemonDetailsContainer = document.getElementById("pokemonDetails");
+/* const pokemonDetailsContainer = document.getElementById("pokemonDetails"); */
 const storedPokemonList = localStorage.getItem("pokemonList");
 
 const typeImgs = {
@@ -64,14 +65,17 @@ async function descargaLista (){
   } else {
     try {
       const response = await fetch(apiUrl);
+      if(!response.ok){
+        throw new Error("A wild Snorlax has blocked your path!");
+      }
+
       const data = await response.json();
       pokemonList = data.results;
-
       localStorage.setItem("pokemonList", JSON.stringify(pokemonList));
-
       busqueda();
     } catch (error) {
-      console.error("Error al obtener los datos de la API:", error);
+      errorConexion(error);
+      console.log(error);
     }
   }
 };
@@ -132,6 +136,7 @@ function createPokemonCard(pokemon) {
 
   getPokemonData(pokemon.url)
     .then(pokemonData => {
+      console.log(pokemonData);
       const pokemonImgFront = document.createElement("img");
       pokemonImgFront.classList.add("pokemon-img");
       pokemonImgFront.src = pokemonData.sprites.front_default;
@@ -170,71 +175,166 @@ function createPokemonCard(pokemon) {
       statsListaMenu.appendChild(statsBtnMenu);
 
       statsBtnMenu.addEventListener("click", () =>{
-        divStats.classList.toggle("active");
-        divAbout.classList.toggle("active");
-        statsBtnMenu.classList.toggle("on-off");
+        divStats.classList.add("active");
+        divAbout.classList.add("active");
       });
 
       aboutBtnMenu.addEventListener("click", () =>{
-        divAbout.classList.toggle("active");
-        divStats.classList.toggle("active");
-        aboutBtnMenu.classList.toggle("on-off");
+        divAbout.classList.remove("active");
+        divStats.classList.remove("active");
       });
 
       const pokemonInfoAltura = document.createElement("p");
-      pokemonInfoAltura.classList.add("pokemon-altura");
-      pokemonInfoAltura.textContent = `Height: ${pokemonData.height}`;
+      pokemonInfoAltura.classList.add("pokemon-about");
+
+      pokemonInfoAltura.textContent = `Height: ${((pokemonData.height/10)*3.28).toFixed(2)}'`;
       divAbout.appendChild(pokemonInfoAltura);
 
       const pokemonInfoPeso = document.createElement("p");
-      pokemonInfoPeso.classList.add("pokemon-peso");
-      pokemonInfoPeso.textContent = `Weight: ${pokemonData.weight}`;
+      pokemonInfoPeso.classList.add("pokemon-about");
+      pokemonInfoPeso.textContent = `Weight: ${Math.floor((pokemonData.weight/10)*2.20)} lbs`;
       divAbout.appendChild(pokemonInfoPeso);
 
       const pokemonExpBase = document.createElement("p");
-      pokemonExpBase.classList.add("pokemon-exp-base");
+      pokemonExpBase.classList.add("pokemon-about");
       pokemonExpBase.textContent = `Base exp.: ${pokemonData.base_experience}`;
       divAbout.appendChild(pokemonExpBase);
-
+  
       const pokeHabilidades = document.createElement("p");
-      pokeHabilidades.classList.add("pokemon-habilidades");
-      pokeHabilidades.textContent = `Abilities: ${pokemonData.abilities[0].ability.name}, ${pokemonData.abilities[1].ability.name}`
+      pokeHabilidades.classList.add("pokemon-about");
+      if(pokemonData.abilities.length > 1){
+        pokeHabilidades.textContent = `Abilities: ${pokemonData.abilities[0].ability.name}, ${pokemonData.abilities[1].ability.name}`;
+      }else{
+        pokeHabilidades.textContent = `Abilities: ${pokemonData.abilities[0].ability.name}`;
+      }
       divAbout.appendChild(pokeHabilidades);
 
       const pokemonInfoHp = document.createElement("p");
-      pokemonInfoHp.classList.add("pokemon-hp");
-      pokemonInfoHp.textContent = `HP: ${pokemonData.stats[0].base_stat}`;
+      pokemonInfoHp.classList.add("pokemon-stats");
+      pokemonInfoHp.textContent = `HP ${pokemonData.stats[0].base_stat}`;
       divStats.appendChild(pokemonInfoHp);
+      let graficoHp = "";
+      for (let i = 0; i < pokemonData.stats[0].base_stat/25; i++) {
+        graficoHp += "▬"; 
+      }
+      const pokeGraficoHp = document.createElement("p");
+      pokeGraficoHp.textContent = `${graficoHp}`;
+      pokeGraficoHp.classList.add("poke-grafico");
+      if(pokemonData.stats[0].base_stat < 40){
+        pokeGraficoHp.style.color = "red";
+      }else if(pokemonData.stats[0].base_stat >= 40 && pokemonData.stats[0].base_stat < 80){
+        pokeGraficoHp.style.color = "orange";
+      }else{
+        pokeGraficoHp.style.color = "green";
+      }
+      divStats.appendChild(pokeGraficoHp);
       
       const pokemonInfoAtaque = document.createElement("p");
-      pokemonInfoAtaque.classList.add("pokemon-ataque");
-      pokemonInfoAtaque.textContent = `Attack: ${pokemonData.stats[1].base_stat}`;
+      pokemonInfoAtaque.classList.add("pokemon-stats");
+      pokemonInfoAtaque.textContent = `Att ${pokemonData.stats[1].base_stat}`;
       divStats.appendChild(pokemonInfoAtaque);
+      let graficoAtaque = "";
+      for (let i = 0; i < pokemonData.stats[1].base_stat/20; i++) {
+        graficoAtaque += "▬"; 
+      }
+      const pokeGraficoAtaque = document.createElement("p");
+      pokeGraficoAtaque.textContent = `${graficoAtaque}`;
+      pokeGraficoAtaque.classList.add("poke-grafico");
+      if(pokemonData.stats[1].base_stat < 40){
+        pokeGraficoAtaque.style.color = "red";
+      }else if(pokemonData.stats[1].base_stat >= 40 && pokemonData.stats[1].base_stat < 80){
+        pokeGraficoAtaque.style.color = "orange";
+      }else{
+        pokeGraficoAtaque.style.color = "green";
+      }
+      divStats.appendChild(pokeGraficoAtaque);
 
       const pokemonInfoAtaqueEspecial = document.createElement("p");
-      pokemonInfoAtaqueEspecial.classList.add("pokemon-ataque-especial");
-      pokemonInfoAtaqueEspecial.textContent = `Sp. Attack: ${pokemonData.stats[3].base_stat}`;
+      pokemonInfoAtaqueEspecial.classList.add("pokemon-stats");
+      pokemonInfoAtaqueEspecial.textContent = `Sp. At ${pokemonData.stats[3].base_stat}`;
       divStats.appendChild(pokemonInfoAtaqueEspecial);
+      let graficoAtaqueEsp = "";
+      for (let i = 0; i < pokemonData.stats[3].base_stat/20; i++) {
+        graficoAtaqueEsp += "▬"; 
+      }
+      const pokeGraficoAtaqueEsp = document.createElement("p");
+      pokeGraficoAtaqueEsp.textContent = `${graficoAtaqueEsp}`;
+      pokeGraficoAtaqueEsp.classList.add("poke-grafico");
+      if(pokemonData.stats[3].base_stat < 40){
+        pokeGraficoAtaqueEsp.style.color = "red";
+      }else if(pokemonData.stats[3].base_stat >= 40 && pokemonData.stats[3].base_stat < 80){
+        pokeGraficoAtaqueEsp.style.color = "orange";
+      }else{
+        pokeGraficoAtaqueEsp.style.color = "green";
+      }
+      divStats.appendChild(pokeGraficoAtaqueEsp);
 
       const pokemonInfoDefensa = document.createElement("p");
-      pokemonInfoDefensa.classList.add("pokemon-defensa");
-      pokemonInfoDefensa.textContent = `Defense: ${pokemonData.stats[2].base_stat}`;
+      pokemonInfoDefensa.classList.add("pokemon-stats");
+      pokemonInfoDefensa.textContent = `Def ${pokemonData.stats[2].base_stat}`;
       divStats.appendChild(pokemonInfoDefensa);
+      let graficoDefensa = "";
+      for (let i = 0; i < pokemonData.stats[2].base_stat/20; i++) {
+        graficoDefensa += "▬"; 
+      }
+      const pokeGraficoDefensa = document.createElement("p");
+      pokeGraficoDefensa.textContent = `${graficoDefensa}`;
+      pokeGraficoDefensa.classList.add("poke-grafico");
+      if(pokemonData.stats[2].base_stat < 40){
+        pokeGraficoDefensa.style.color = "red";
+      }else if(pokemonData.stats[2].base_stat >= 40 && pokemonData.stats[2].base_stat < 80){
+        pokeGraficoDefensa.style.color = "orange";
+      }else{
+        pokeGraficoDefensa.style.color = "green";
+      }
+      divStats.appendChild(pokeGraficoDefensa);
 
       const pokemonInfoDefensaEspecial = document.createElement("p");
-      pokemonInfoDefensaEspecial.classList.add("pokemon-defensa-especial");
-      pokemonInfoDefensaEspecial.textContent = `Sp. Defense: ${pokemonData.stats[4].base_stat}`;
+      pokemonInfoDefensaEspecial.classList.add("pokemon-stats");
+      pokemonInfoDefensaEspecial.textContent = `Sp. Df ${pokemonData.stats[4].base_stat}`;
       divStats.appendChild(pokemonInfoDefensaEspecial);
+      let graficoDefensaEsp = "";
+      for (let i = 0; i < pokemonData.stats[4].base_stat/20; i++) {
+        graficoDefensaEsp += "▬"; 
+      }
+      const pokeGraficoDefensaEsp = document.createElement("p");
+      pokeGraficoDefensaEsp.textContent = `${graficoDefensaEsp}`;
+      pokeGraficoDefensaEsp.classList.add("poke-grafico");
+      if(pokemonData.stats[4].base_stat < 40){
+        pokeGraficoDefensaEsp.style.color = "red";
+      }else if(pokemonData.stats[4].base_stat >= 40 && pokemonData.stats[4].base_stat < 80){
+        pokeGraficoDefensaEsp.style.color = "orange";
+      }else{
+        pokeGraficoDefensaEsp.style.color = "green";
+      }
+      divStats.appendChild(pokeGraficoDefensaEsp);
 
       const pokemonInfoVelocidad = document.createElement("p");
-      pokemonInfoVelocidad.classList.add("pokemon-velocidad");
-      pokemonInfoVelocidad.textContent =  `Speed: ${pokemonData.stats[5].base_stat}`;
+      pokemonInfoVelocidad.classList.add("pokemon-stats");
+      pokemonInfoVelocidad.textContent =  `Speed ${pokemonData.stats[5].base_stat}`;
       divStats.appendChild(pokemonInfoVelocidad);
+      let graficoVelocidad = "";
+      for (let i = 0; i < pokemonData.stats[5].base_stat/20; i++) {
+        graficoVelocidad += "▬"; 
+      }
+      const pokeGraficoVelocidad = document.createElement("p");
+      pokeGraficoVelocidad.textContent = `${graficoVelocidad}`;
+      pokeGraficoVelocidad.classList.add("poke-grafico");
+      if(pokemonData.stats[5].base_stat < 40){
+        pokeGraficoVelocidad.style.color = "red";
+      }else if(pokemonData.stats[5].base_stat >= 40 && pokemonData.stats[5].base_stat < 80){
+        pokeGraficoVelocidad.style.color = "orange";
+      }else{
+        pokeGraficoVelocidad.style.color = "green";
+      }
+      divStats.appendChild(pokeGraficoVelocidad);
   
       pokemonImgFront.addEventListener("mousedown", (e) =>{
         e.stopPropagation();
         if(pokemonImgFront.src === pokemonData.sprites.front_default){
-          pokemonImgFront.src = pokemonData.sprites.back_default;
+          if(pokemonData.sprites.back_default !== null){
+            pokemonImgFront.src = pokemonData.sprites.back_default;
+          }
         }else{
           pokemonImgFront.src = pokemonData.sprites.front_default;
         }
@@ -242,7 +342,31 @@ function createPokemonCard(pokemon) {
       pokemonImgFront.addEventListener("mouseup", (e) =>{
         e.stopPropagation();
         if(pokemonImgFront.src === pokemonData.sprites.front_default){
-          pokemonImgFront.src = pokemonData.sprites.back_default;
+          if(pokemonData.sprites.back_default !== null){
+            pokemonImgFront.src = pokemonData.sprites.back_default;
+          }
+        }else{
+          pokemonImgFront.src = pokemonData.sprites.front_default;
+        }
+      });
+
+      //---Móvil:
+      pokemonImgFront.addEventListener("touchstart", (e) =>{
+        e.stopPropagation();
+        if(pokemonImgFront.src === pokemonData.sprites.front_default){
+          if(pokemonData.sprites.back_default !== null){
+            pokemonImgFront.src = pokemonData.sprites.back_default;
+          }
+        }else{
+          pokemonImgFront.src = pokemonData.sprites.front_default;
+        }
+      });
+      pokemonImgFront.addEventListener("touchend", (e) =>{
+        e.stopPropagation();
+        if(pokemonImgFront.src === pokemonData.sprites.front_default){
+          if(pokemonData.sprites.back_default !== null){
+            pokemonImgFront.src = pokemonData.sprites.back_default;
+          }
         }else{
           pokemonImgFront.src = pokemonData.sprites.front_default;
         }
@@ -271,14 +395,24 @@ function createPokemonCard(pokemon) {
       }
     })
     .catch(error => {
-      console.error("Error al obtener los datos del Pokémon:", error);
+      console.error(error);
+      errorConexion(error);
     });
 
   return pokemonCard;
 };
 
 async function getPokemonData(url) {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
+  try{
+    const response = await fetch(url);
+    if(!response.ok){
+      throw new Error("It has not been possible to access the data")
+    }
+    const data = await response.json();
+    
+    return data;
+  }catch(e){
+    console.log(`Error: ${e.message}`);
+    errorConexion(e);
+  }
 };

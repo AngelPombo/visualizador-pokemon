@@ -1,21 +1,30 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Visualizador de Pokémon</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>Pokédex</h1>
-  <nav>
-    <input type="text" id="pokemonInput" placeholder="Search a Pokemon">
-  </nav>
-  <main>
-    <div class="container">
-      <div id="pokemonList"></div>
-      <!-- <img class="poke-not-found" src="https://e7.pngegg.com/pngimages/569/963/png-clipart-pokeball-illustration-ash-ketchum-pokeball-s-image-file-formats-rim.png" alt="Pokemon not found"> -->
-    </div>
-  </main>
-  
-  <script src="prueba.js" type="module"></script>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Pokémon</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <header class="header-body">
+      <h1>Pokédex</h1>
+      <form class="form">
+        <label for="pokemonInput"><img src="./img/lupa.svg" alt="Lupa" class="img-lupa"></label>
+        <input type="text" id="pokemonInput" placeholder="Search for a Pokemon" size="70px">
+        
+      </form>
+    </header>
+    <main>
+      <div class="container">
+        <div id="pokemonList"></div>
+        <!-- <img class="poke-not-found" src="https://e7.pngegg.com/pngimages/569/963/png-clipart-pokeball-illustration-ash-ketchum-pokeball-s-image-file-formats-rim.png" alt="Pokemon not found"> -->
+      </div>
+    </main>
+    <script src="prueba.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./sweetAlert.js" type="module"></script>
+    <script src="./funciones.js" type="module"></script>
+  </body>
 </html>
