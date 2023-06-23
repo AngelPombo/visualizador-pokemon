@@ -8,18 +8,22 @@
 
 html{
   min-height: 100%;
+  position: relative;
 }
 
 body{
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 5rem auto 3rem;
+  grid-template-rows: auto auto 3rem;
   grid-template-areas: 
     "head"
-    "form"
     "main"
     "foot";
-  background: linear-gradient(270deg, #9fffe7, #baccff);
+  background-image: url(./img/pokemitosMejorencascada.png);
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: 45%;
 }
 
 a{
@@ -30,6 +34,10 @@ a{
 h1{
   grid-area: head;
   text-align: center;
+}
+
+h1 > img {
+  max-width: 60%;
 }
 
 h2{
@@ -46,22 +54,18 @@ h3{
   margin-right: auto;
 }
 
-form{
-    grid-area: form;
-}
 
 main{
+  grid-area: main;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   flex-direction: row;
   margin: auto;
-  grid-area: main;
 }
 
 .container {
     text-align: center;
-    margin-top: 5%;
   }
 
 .pokemonInput{
@@ -71,7 +75,7 @@ main{
 .pokemon-card {
   display: inline-block;
   grid-area: main;
-  margin: 10px;
+  margin: 40px 10px 10px 10px;
   border: 1px solid #ccc;
   border-radius: 17px 17px 17px 17px;
   box-shadow: 0 25px 25px rgba(0, 0, 0, 0.4);
@@ -198,10 +202,6 @@ main{
     margin-top: 15px;
 }
 
-.poke-grafico{
-    text-align: left;
-}
-
 .div-tipos{
     display: flex;
     gap: 1rem;
@@ -213,11 +213,6 @@ main{
     max-width: 20%;
     margin-top: 1.5rem;
 }
-
-/* .on-off{
-  border-bottom-style: ridge;
-  border-bottom-color: black;
-} */
 
 button{
   cursor: pointer; 
@@ -231,10 +226,12 @@ button{
 
 button:hover{
   transform: scale(1.1);
+  transition: 300ms;
 }
 
 .pokemon-img:hover{
   transform: scale(1.08);
+  transition: 500ms;
 }
 
 .div-id{
@@ -243,7 +240,7 @@ button:hover{
 }
 
 #pokemonInput{
-  margin: auto;
+  margin: 0;
   padding: 0.4rem;
   border: 1px solid rgb(191, 215, 226);
   border-radius: 8px 8px 8px 8px;
@@ -252,36 +249,87 @@ button:hover{
 }
 
 .header-body{
-  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
 }
 
 .form{
   display: inline-flex;
   gap: 0.3rem;
   align-items: center;
+  justify-content: center;
 }
 
-.img-lupa{
-  min-width: 9%;
+.img-pokeball{
+  max-width: 2em;
+  animation: movPokeball 4s ease 0s infinite normal forwards;
+}
+
+footer{
+  position: absolute;
+  bottom: 0;
+  font-size: 9px;
+}
+
+.poke-grafico{
+  opacity: 0%;
+  text-align: left;
+  animation: statsGrow 2s ease-out 0.2s normal forwards;
+  -webkit-transform-origin-x: 0%;
+}
+
+/*----KEYFRAMES----*/
+@keyframes statsGrow {
+  0%{
+    transform: scaleX(0);
+  }
+
+  100%{
+    transform: scaleX(1);
+    opacity: 100%;
+  }
+}
+
+@keyframes movPokeball {
+	0%,
+	100% {
+		transform: rotate(0deg);
+		transform-origin: 50% 100%;
+	}
+
+	10% {
+		transform: rotate(2deg);
+	}
+
+	20%,
+	40%,
+	60% {
+		transform: rotate(-4deg);
+	}
+
+	30%,
+	50%,
+	70% {
+		transform: rotate(4deg);
+	}
+
+	80% {
+		transform: rotate(-2deg);
+	}
+
+	90% {
+		transform: rotate(2deg);
+	}
 }
 
 /*Media-queries*/
 
 @media (max-width: 700px) {
-
-  h1{
-    font-size: 2rem;
-  }
-
   input{
-    width: 90%; 
+    width: 80%; 
     max-width: none; 
     min-width: none; 
     height: auto; 
   }
-  
 }
