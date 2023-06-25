@@ -55,6 +55,12 @@ function busqueda() {
     if(pokemonIncluidos.length > 0){
       pokeNotFound.classList.remove("not-found-active");
     }
+
+    pokemonInput.addEventListener("keydown", function(event){
+      if(event.key === "Enter"){
+        event.preventDefault();
+      }
+    });
     
     displayPokemonList(pokemonIncluidos);
   });
