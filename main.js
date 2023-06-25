@@ -41,7 +41,6 @@ function busqueda() {
 
     if (pokemonBuscado === "") {
       pokemonListContainer.innerHTML = "";
-      pokeNotFound.classList.remove("not-found-active");
       return;
     }
 
@@ -49,18 +48,12 @@ function busqueda() {
       pokemon.name.includes(pokemonBuscado)
     );
 
-    for(let i=0; i<pokemonIncluidos.length; i++){
-      if(pokemonBuscado.includes(pokemonIncluidos[i].name)){
-        pokeNotFound.classList.remove("not-found-active");
-      }
-
-      if(pokemonIncluidos[i].name.includes("-")){
-        pokeNotFound.classList.remove("not-found-active");
-      }
-    }
-
     if(pokemonIncluidos.length === 0){
       pokeNotFound.classList.add("not-found-active");
+    }
+
+    if(pokemonIncluidos.length > 0){
+      pokeNotFound.classList.remove("not-found-active");
     }
     
     displayPokemonList(pokemonIncluidos);
