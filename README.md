@@ -1,4 +1,4 @@
-<!-- Desarrollo del primer proyecto en el bootcamp de programación web Full Stack de Hack a Boss (2023)
+Desarrollo del primer proyecto en el bootcamp de programación web Full Stack de Hack a Boss (2023)
 
 Bases del proyecto:
 - La aplicación muestra un único input que permite buscar Pokémon por su nombre.
@@ -19,4 +19,4 @@ Lenguajes de programación y marcado utilizados:
     -CSS
 
 Autores/as: Luis Cibeira, Ángel Pombo y Antía Varela.
- -->
+
