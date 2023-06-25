@@ -8,22 +8,24 @@
   </head>
 
   <body>
-    <!-- <div class="ash-decoration"></div> -->
     <header class="header-body">
-      <h1><img src="./img/pokedexTitle.png" alt="Título: Pokédex"></h1>
+      <h1><img src="./img/pokedexTitle.png" alt="Title: Pokédex"></h1>
       <form class="form">
-        <label for="pokemonInput"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Pokebola-pokeball-png-0.png/769px-Pokebola-pokeball-png-0.png" alt="Pokéball" class="img-pokeball"></label>
-        <input type="text" id="pokemonInput" placeholder="Search for a Pokemon" size="70px">
+        <label for="pokemon-input"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Pokebola-pokeball-png-0.png/769px-Pokebola-pokeball-png-0.png" alt="Search for a Pokemon" class="img-pokeball"></label>
+        <input type="text" id="pokemon-input" placeholder="Search for a Pokémon">
       </form>
       
     </header>
+
     <main>
       <div class="container">
-        <div id="pokemonList"></div>
-        <!-- <img class="poke-not-found" src="https://e7.pngegg.com/pngimages/569/963/png-clipart-pokeball-illustration-ash-ketchum-pokeball-s-image-file-formats-rim.png" alt="Pokemon not found"> -->
+        <section id="pokemon-list"></section>
       </div>
+      <div class="not-found"><p>The Pokémon you're looking for doesn't appear in the data. Try again trainer!</p><img src="https://static.wikia.nocookie.net/espokemon/images/0/0a/Profesor_Oak_%28XY%29.png" alt="Pokémon not found"></div>
     </main>
+
     <footer>©2023 Ángel Pombo - Luis Cibeira - Antía Varela</footer>
+
     <script src="main.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./sweetAlert.js" type="module"></script>
@@ -31,4 +33,3 @@
   </body>
 
 </html>
-
